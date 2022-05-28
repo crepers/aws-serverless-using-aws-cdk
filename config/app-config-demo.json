@@ -1,0 +1,9 @@
+{
+    "Project": {
+        "Name": "ServerlessCdk",
+        "Stage": "Demo",
+        "Account": "33506******",
+        "Region": "ap-northeast-2",
+        "Profile": ""
+    }
+}

@@ -1,6 +1,16 @@
 # AWS Serverless using AWS CDK
 
-This repository provides the basic patterns of [AWS Serverless](https://aws.amazon.com/serverless) using [AWS CDK](https://aws.amazon.com/cdk).
+This repository describes how to implement basic patterns of [AWS Serverless](https://aws.amazon.com/serverless) using [AWS CDK](https://aws.amazon.com/cdk). AWS CDK is a great tool for serverless applications because it helps you manage multiple serverless resources in one place.
+
+Korean practice guide and demo is provided through the following video: [AWS DevAxConnect - AWS Serverless service development with AWS CDK](https://www.twitch.tv/videos/1070023684?collection=4wZXJvncHRaoEg).
+
+This project was implemented based on [AWS CDK Project Template for DevOps](https://github.com/aws-samples/aws-cdk-project-template-for-devops) for more fluent DevOps application.
+
+Other "Using AWS CDK" series can be found in:
+
+- [AWS ECS DevOps Using AWS CDK](https://github.com/aws-samples/aws-ecs-devops-using-aws-cdk)
+- [Amazon SageMaker Model Serving using AWS CDK](https://github.com/aws-samples/amazon-sagemaker-model-serving-using-aws-cdk)
+- [AWS IoT Greengrass Ver2 using AWS CDK](https://github.com/aws-samples/aws-iot-greengrass-v2-using-aws-cdk)
 
 ## Contents
 
@@ -66,7 +76,7 @@ To efficiently define and provision serverless resources, [AWS Cloud Development
 
 Because this solusion is implemented in CDK, we can deploy these cloud resources using CDK CLI. Among the various languages supported, this solution used typescript. Because the types of **typescript** are very strict, with the help of auto-completion, typescrip offers a very nice combination with AWS CDK.
 
-***Caution***: This solution contains not-free tier AWS services. So be careful about the possible costs. Fortunately, serverless services minimize cost if not used(Amazon SageMaker's Endpoint is not serverless).
+***Caution***: This solution contains not-free tier AWS services. So be careful about the possible costs. Fortunately, serverless services minimize cost if not used.
 
 ### **Prerequisites**
 
@@ -89,7 +99,7 @@ First of all, enter your project basic configuration in the follwoing document: 
         "Name": "ServerlessCdk",
         "Stage": "Demo",
         "Account": "75157*******",
-        "Region": "us-east-1",
+        "Region": "us-east-2",
         "Profile": "cdk-demo"
     }
 }
@@ -152,7 +162,7 @@ For ***Async Batch Request***, execute the following command, which will upload 
 sh script/upload_s3.sh
 ...
 ...
-upload: script/input_s3.json to s3://serverlesscdkdemo-serverlessstack-us-east-1-75157/batch/input_s3.json
+upload: script/input_s3.json to s3://serverlesscdkdemo-serverlessstack-us-east-2-75157/batch/input_s3.json
 ```
 
 After executing this command, please check your DynamoDB. You can find the multiple items in that.
@@ -163,7 +173,31 @@ For ***Sync Single Request***, execute the following command, which will send ht
 sh script/request_api.sh
 ...
 ...
-[{"isbn": "isbn-01", "title": "book-01"}, {"isbn": "isbn-03", "title": "book-03"}, {"isbn": "isbn-02", "title": "book-02"}, {"isbn": "isbn-04", "title": "book-04"}]
+{
+  "status": "success",
+  "books": [
+    {
+      "isbn": "isbn-01",
+      "src": "sns",
+      "title": "book-01"
+    },
+    {
+      "isbn": "isbn-03",
+      "src": "s3",
+      "title": "book-03"
+    },
+    {
+      "isbn": "isbn-02",
+      "src": "s3",
+      "title": "book-02"
+    },
+    {
+      "isbn": "isbn-04",
+      "src": "s3",
+      "title": "book-04"
+    }
+  ]
+}
 ```
 
 ## **About CDK-Project**
